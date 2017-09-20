@@ -10,6 +10,10 @@ import onionify from 'cycle-onionify';
 import { Component, Sources, RootSinks } from './interfaces';
 import { App } from './app';
 
+import { routerify } from 'cyclic-router';
+import { makeHistoryDriver } from '@cycle/history';
+import switchPath from 'switch-path';
+
 const main: Component = onionify(App);
 
 let drivers: any, driverFn: any;
@@ -17,7 +21,8 @@ let drivers: any, driverFn: any;
 drivers = {
     DOM: makeDOMDriver('#app'),
     HTTP: makeHTTPDriver(),
-    Time: timeDriver
+    Time: timeDriver,
+    history: makeHistoryDriver()
 };
 /// #else
 driverFn = () => ({
@@ -25,22 +30,25 @@ driverFn = () => ({
         pauseSinksWhileReplaying: false
     }),
     HTTP: restartable(makeHTTPDriver()),
-    Time: timeDriver
+    Time: timeDriver,
+    history: makeHistoryDriver()
 });
 /// #endif
 export const driverNames: string[] = Object.keys(drivers || driverFn());
 
+const mainWithRouting = routerify(main, switchPath);
+
 /// #if PRODUCTION
-run(main as any, drivers);
+run(mainWithRouting as any, drivers);
 /// #else
 const rerun = rerunner(setup, driverFn, isolate);
-rerun(main as any);
+rerun(mainWithRouting as any);
 
 if (module.hot) {
     module.hot.accept('./app', () => {
         const newApp = require('./app').App;
 
-        rerun(onionify(newApp));
+        rerun(routerify(onionify(newApp), switchPath));
     });
 }
 /// #endif
