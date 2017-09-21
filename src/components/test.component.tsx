@@ -18,12 +18,13 @@ export function Test(sources: AppSources): AppSinks {
     const vdom$: Stream<VNode> = view(sources.onion.state$);
     return {
         DOM: vdom$,
-        onion: action$
+        onion: action$,
+        HTTP: xs.empty()
     };
 }
 
 function intent(DOM: DOMSource): Stream<Reducer> {
-    const init$: Stream<Reducer> = xs.of<Reducer>(() => ({ count: 0 }));
+    const init$: Stream<Reducer> = xs.of<Reducer>(state => ({ ...state, count: 0 }));
 
     const add$: Stream<Reducer> = DOM.select('.add')
         .events('click')

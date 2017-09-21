@@ -26,11 +26,12 @@ export function view(active$: Stream<any>, state$: Stream<AppState>): Stream<VNo
     return xs.combine(active$, state$)
         .map(([a, menuActive]) => <div className="navbar is-primary" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
-                    <a className="navbar-item" href="http://bulma.io">
-                        <img src="http://bulma.io/images/bulma-logo.png"
-                             alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28"/>
+                    <a className="navbar-item" href="https://cycle.js.org">
+                        <img src="/public/cyclejs_logo.svg"
+                             alt="Cycle.js PWA HackerNews reader" width="112" height="28"/>
                     </a>
-                    <div className={`navbar-burger burger ${menuActive.hamburgerActive ? 'is-active' : ''}`} data-target="navMenu">
+                    <div className={`navbar-burger burger ${menuActive.hamburgerActive ? 'is-active' : ''}`}
+                         data-target="navMenu">
                         <span/>
                         <span/>
                         <span/>
@@ -38,16 +39,22 @@ export function view(active$: Stream<any>, state$: Stream<AppState>): Stream<VNo
                 </div>
                 <div id="navMenu" className={`navbar-menu ${menuActive.hamburgerActive ? 'is-active' : ''}`}>
                     <div className="navbar-start">
-                        <a className="navbar-item " href="/">
-                            <span className="bd-emoji">⭐</span>
-                            Home
+                        <a className={`navbar-item ${isActive(a.pathname, '/')}`} href="/">
+                            News
                         </a>
-                        <a className="navbar-item " href="/test">
-                            <span className="bd-emoji">⭐</span>
-                            Test {a}
+                        <a className={`navbar-item ${isActive(a.pathname, '/new')}`} href="/test">
+                            New
                         </a>
                     </div>
                 </div>
             </div>
         );
+}
+
+function isActive(activated: string, path: string): string {
+    if (activated === path ) {
+        return 'is-active';
+    } else {
+        return '';
+    }
 }

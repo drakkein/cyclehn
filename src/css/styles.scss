@@ -1,6 +1,45 @@
+@import "~bulma/sass/utilities/initial-variables.sass";
+$primary: $blue !default;
+
 @import "~bulma/bulma.sass";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
 
 html {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
+  background-color: #fafafa;
 }
+
+body {
+  font-family: Open Sans, Arial;
+  color: #555;
+}
+
+.media-left {
+  width: 42px;
+  text-align: right;
+}
+
+.has-text-underlined {
+  text-decoration: underline;
+}
+
+.pagination {
+  padding-top: 20px;
+
+  & .pagination-indicator {
+    order: 2;
+  }
+
+  & .pagination-disabled {
+    pointer-events: none;
+    outline: none;
+    background-color: $pagination-disabled-background-color;
+    border-color: $pagination-disabled-border-color;
+    box-shadow: none;
+    color: $pagination-disabled-color;
+    opacity: 0.5;
+  }
+}
+

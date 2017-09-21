@@ -11,13 +11,15 @@ export function App(sources: AppSources): AppSinks {
 
     const reducer$: Stream<Reducer> = xs.merge(routerSinks.onion, navbarSinks.onion);
 
-    const array$ = sources.onion.state$;
+    const routerDOM = routerSinks!.DOM as Stream<VNode>;
+    const navbarDOM = navbarSinks.DOM as Stream<VNode>;
 
-    const vdom$: Stream<VNode> = view(routerSinks.DOM, navbarSinks.DOM);
+    const vdom$: Stream<VNode> = view(routerDOM, navbarDOM);
 
     return {
         DOM: vdom$,
         onion: reducer$,
+        HTTP: routerSinks.HTTP,
         router: routerSinks.router
     };
 }
@@ -26,7 +28,9 @@ function view(routerVDom$: Stream<VNode>, navbarVNode$: Stream<VNode>): Stream<V
     return xs.combine(routerVDom$, navbarVNode$).map(([routerVDOM, navbarVNode]) => {
         return div('.app', [
             navbarVNode,
-            routerVDOM
+            div('.container', [
+                routerVDOM
+            ])
         ]);
     });
 }
