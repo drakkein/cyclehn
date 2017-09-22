@@ -1,9 +1,20 @@
 @import "~bulma/sass/utilities/initial-variables.sass";
+
 $primary: $blue !default;
+$skeleton-grey: lighten($grey-lighter, 10%);
+$skeleton-primary: lighten($primary, 30%);
 
 @import "~bulma/bulma.sass";
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
+@keyframes skeleton {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100;
+  }
+}
 
 html {
   width: 100%;
@@ -16,9 +27,9 @@ body {
   color: #555;
 }
 
-.media-left {
-  width: 42px;
-  text-align: right;
+.content h5:before {
+  content: '';
+  background: red;
 }
 
 .has-text-underlined {
@@ -43,3 +54,62 @@ body {
   }
 }
 
+.media {
+  min-height: 55px;
+}
+
+.loading {
+  & .content h5:before, & .meta:before, & .media-left:before {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    float: left;
+    animation: skeleton 400ms;
+  }
+
+  & .media-left:before {
+    background-color: $skeleton-primary;
+  }
+
+  & .content h5:before, & .meta:before {
+    background-color: $skeleton-grey;
+  }
+}
+
+.loaded {
+  animation: skeleton 500ms;
+}
+
+.content h5 {
+  position: relative;
+  min-width: 20%;
+  min-height: 24px;
+  display: block;
+}
+
+.time {
+  width: 150px;
+  position: relative;
+  min-height: 24px;
+  text-align: right;
+}
+
+.meta {
+  width: 100%;
+  position: relative;
+  min-height: 18px;
+}
+
+.points {
+  position: relative;
+}
+
+.media-left {
+  width: 48px;
+  min-height: 33px;
+  text-align: right;
+  position: relative;
+}

@@ -39,10 +39,10 @@ export function view(active$: Stream<any>, state$: Stream<AppState>): Stream<VNo
                 </div>
                 <div id="navMenu" className={`navbar-menu ${menuActive.hamburgerActive ? 'is-active' : ''}`}>
                     <div className="navbar-start">
-                        <a className={`navbar-item ${isActive(a.pathname, '/')}`} href="/">
+                        <a className={`navbar-item ${isActive(a.pathname, ['/$', '/news/\\d'])}`} href="/">
                             News
                         </a>
-                        <a className={`navbar-item ${isActive(a.pathname, '/new')}`} href="/test">
+                        <a className={`navbar-item ${isActive(a.pathname, '/test')}`} href="/test">
                             New
                         </a>
                     </div>
@@ -51,7 +51,15 @@ export function view(active$: Stream<any>, state$: Stream<AppState>): Stream<VNo
         );
 }
 
-function isActive(activated: string, path: string): string {
+function isActive(activated: string, path: string | string[]): string {
+    if (typeof path !== 'string') {
+        if (path.some(v => !!activated.match(RegExp(v)))) {
+            return 'is-active';
+        } else {
+            return '';
+        }
+    }
+
     if (activated === path ) {
         return 'is-active';
     } else {

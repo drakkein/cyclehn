@@ -14,10 +14,6 @@ export function ListComponent(sources: AppSources): AppSinks {
     const action$ = intent(sources);
 
     const http$ = props$
-        .map(v => ({
-            ...v,
-            page: v.page - 1
-        }))
         .map((query: any) => ({
             url: 'https://hnpwa.com/api/v0/news.json',
             category: 'news',
@@ -32,7 +28,7 @@ export function ListComponent(sources: AppSources): AppSinks {
 }
 
 export function intent({ DOM, HTTP }: AppSources): Stream<Reducer> {
-    const init$: Stream<Reducer> = xs.of<Reducer>(state => ({ ...state, list: [] }));
+    const init$: Stream<Reducer> = xs.of<Reducer>(state => ({ ...state, list: Array(30).fill('skeleton') }));
 
     const news$ = HTTP.select('news')
         .flatten()
@@ -45,14 +41,15 @@ export function intent({ DOM, HTTP }: AppSources): Stream<Reducer> {
 export function view(state$: Stream<AppState>, props$: Stream<any>): Stream<VNode> {
     return xs.combine(state$.map(state => state.list), props$)
         .map(([list, props]) => {
-            const items = list.map((item, index) => listItemComponent(item));
+            const items = list
+                .map((item, index) => listItemComponent(item));
+
             const pagination = {
                 previous: Number(props.page) - 1,
                 actual: props.page,
                 next: Number(props.page) + 1
             };
             return <div className="box is-radiusless">
-                <listItemComponent {...list} />
                 {items}
                 <nav className="pagination is-centered" role="navigation" aria-label="pagination">
                     <a href={`/news/${pagination.previous}`}

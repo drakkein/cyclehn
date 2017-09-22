@@ -6,23 +6,29 @@ export function listItemComponent(props: FeedItem): any {
     return view(props);
 }
 
-function view(props: FeedItem): VNode {
-    return <article className="media">
+function view(props: FeedItem | 'skeleton'): VNode {
+    const item = props as FeedItem;
+    const domainString = !!item.domain ? <span className="has-text-grey-light">({item.domain})</span> : '';
+    const metaString = !!item.title ? <span>
+                Posted by <a href={`/user/${item.user}`}>{item.user || 'ad'}</a>
+                | <a className="has-text-dark has-text-underlined" href={`/item/${item.id}`}>{item.comments_count} comments</a>
+                </span> : '';
+
+    return <article className={`media ${props === 'skeleton' ? 'loading' : 'loaded'}`}>
         <div className="media-left">
             <span className="has-text-info points is-size-4">
-                {props.points || '-'}
+                {item.points}{!item.points && item.title ? <span className="bd-emoji">💩</span> : ''}
             </span>
         </div>
         <div className="media-content">
             <div className="content">
-                <a href={props.url}>
-                    <span className="is-pulled-right has-text-grey">{props.time_ago}</span>
-                    <h5>{props.title} <span className="has-text-grey-light">({props.domain || '-'})</span></h5>
+                <a href={item.url}>
+                    <span className="is-pulled-right has-text-grey time">{item.time_ago}</span>
+                    <h5>{item.title} {domainString}</h5>
                 </a>
             </div>
             <div className="meta is-size-7">
-                Posted by <a href={`/user/${props.user}`}>{props.user || '-'}</a>
-                | <a className="has-text-dark has-text-underlined" href={`/item/${props.id}`}>{props.comments_count} comments</a>
+                {metaString}
             </div>
         </div>
     </article>;
