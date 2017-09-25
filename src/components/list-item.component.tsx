@@ -10,8 +10,7 @@ function view(props: FeedItem | 'skeleton'): VNode {
     const item = props as FeedItem;
     const domainString = !!item.domain ? <span className="has-text-grey-light">({item.domain})</span> : '';
     const metaString = !!item.title ? <span>
-                Posted by <a href={`/user/${item.user}`}>{item.user || 'job'}</a>
-                | <a className="has-text-dark has-text-underlined" href={`/item/${item.id}`}>{item.comments_count} comments</a>
+                Posted by <a href={`/user/${item.user}`}>{item.user || 'job'}</a> | <a className="has-text-dark has-text-underlined" href={`/item/${item.id}`}>{item.comments_count} comments</a>
                 </span> : '';
 
     return <article className={`media ${props === 'skeleton' ? 'loading' : 'loaded'}`}>

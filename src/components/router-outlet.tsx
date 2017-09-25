@@ -9,6 +9,7 @@ export function RouterOutlet(sources: AppSources): AppSinks {
     const routes = {
         '/': ListComponent,
         '/news/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 10, list: 'news'}),  ...srcs}),
+        '/newest' : (srcs: AppSources) => { console.log('trorlololol');return ListComponent({props$: xs.of({page: 1, max: 12, list: 'newest'}),  ...srcs}); },
         '/newest/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 12, list: 'newest'}),  ...srcs}),
         '/ask/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 3, list: 'ask'}),  ...srcs}),
         '/show/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 2, list: 'show'}),  ...srcs}),

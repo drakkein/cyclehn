@@ -4,7 +4,15 @@ $primary: $blue !default;
 $skeleton-grey: lighten($grey-lighter, 10%);
 $skeleton-primary: lighten($primary, 30%);
 
-@import "~bulma/bulma.sass";
+@import "~bulma/sass/utilities/_all";
+@import "~bulma/sass/base/_all";
+
+@import "~bulma/sass/components/navbar.sass";
+@import "~bulma/sass/components/pagination.sass";
+@import "~bulma/sass/components/media.sass";
+
+@import "~bulma/sass/elements/container.sass";
+@import "~bulma/sass/elements/box.sass";
 
 @keyframes skeleton {
   from {
@@ -66,7 +74,7 @@ body {
     right: 0;
     bottom: -2px;
     float: left;
-    animation: skeleton 400ms;
+    animation: skeleton 300ms;
   }
 
   & .media-left:before {
@@ -79,7 +87,7 @@ body {
 }
 
 .loaded {
-  animation: skeleton 500ms;
+  animation: skeleton 400ms;
 }
 
 .content h5 {

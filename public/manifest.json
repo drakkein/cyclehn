@@ -1,6 +1,11 @@
 {
   "short_name": "Cycle HNPWA",
   "name": "Cycle.js implementation of HNPWA",
+  "display": "standalone",
+  "background_color": "#3273DC",
+  "orientation": "portrait",
+  "theme_color": "#3273DC",
+  "start_url": ".",
   "icons": [
     {
       "src": "favicon.ico",
@@ -11,7 +16,10 @@
       "src": "favicon.png",
       "type": "image/png",
       "sizes": "200x200"
+    },    {
+      "src": "favicon-640x640.png",
+      "type": "image/png",
+      "sizes": "640x640"
     }
-  ],
-  "start_url": "/"
+  ]
 }

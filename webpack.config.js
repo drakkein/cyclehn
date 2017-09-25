@@ -1,6 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const StyleExtHtmlWebpackPlugin = require('style-ext-html-webpack-plugin');
+const BrotliPlugin = require('brotli-webpack-plugin');
+
 
 const appPath = (...names) => path.join(process.cwd(), ...names);
 
@@ -11,7 +14,7 @@ module.exports = {
         main: [appPath('src', 'index.ts'), appPath('src', 'css', 'styles.scss')]
     },
     output: {
-        filename: 'bundle.[hash].js',
+        filename: 'bundle.js',
         path: appPath('build')
     },
     plugins: [
@@ -24,13 +27,13 @@ module.exports = {
         }),
         new SWPrecacheWebpackPlugin(
             {
-                cacheId: 'my-project-name',
+                cacheId: 'cycle-hnpwa',
                 dontCacheBustUrlsMatching: /\.\w{8}\./,
                 filename: 'service-worker.js',
+                staticFileGlobs: [appPath('build') + '/**/*.{js,html,css,png,jpg,gif,svg}'],
                 minify: true,
-                navigateFallback: PUBLIC_PATH + 'index.html',
-                staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+                navigateFallback: PUBLIC_PATH + 'index.html'
             }
-        ),
+        )
     ]
 };

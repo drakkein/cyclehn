@@ -1,0 +1,36 @@
+{
+  "hosting": {
+    "public": "build",
+    "headers": [
+      {
+        "source": "/",
+        "headers": [{"key": "Link", "value": "<bundle.js>;rel=preload;as=script,<main.css>;rel=preload;as=style,<cyclejs_logo.svg>;rel=preload;as=image;<https://hnpwa.com>;rel=dns-prefetch"}]
+      },
+      {
+        "source" : "**/*.@(eot|otf|ttf|ttc|woff|font.css)",
+        "headers" : [{
+          "key" : "Access-Control-Allow-Origin",
+          "value" : "*"
+        }]
+      },
+      {
+        "source" : "**/*.@(jpg|jpeg|gif|png|svg|js|css|json)",
+        "headers" : [{
+          "key" : "Cache-Control",
+          "value" : "max-age=2592000"
+        }]
+      }
+    ],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
