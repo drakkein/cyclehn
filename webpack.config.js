@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 const appPath = (...names) => path.join(process.cwd(), ...names);
 
@@ -10,5 +11,14 @@ module.exports = {
     output: {
         filename: 'bundle.[hash].js',
         path: appPath('build')
-    }
+    },
+    plugins: [
+        new webpack.LoaderOptionsPlugin({
+            minimize: true,
+            debug: false,
+            options: {
+                context: __dirname
+            }
+        })
+    ]
 };
