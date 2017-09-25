@@ -28,7 +28,7 @@ export function view(active$: Stream<any>, state$: Stream<AppState>): Stream<VNo
                 <div className="navbar-brand">
                     <a className="navbar-item" href="https://cycle.js.org">
                         <img src="cyclejs_logo.svg"
-                             alt="Cycle.js PWA HackerNews reader" width="112" height="28"/>
+                             alt="Cycle.js PWA HackerNews reader" width="112" height="28" />
                     </a>
                     <div className={`navbar-burger burger ${menuActive.hamburgerActive ? 'is-active' : ''}`}
                          data-target="navMenu">
@@ -42,8 +42,17 @@ export function view(active$: Stream<any>, state$: Stream<AppState>): Stream<VNo
                         <a className={`navbar-item ${isActive(a.pathname, ['/$', '/news/\\d'])}`} href="/">
                             News
                         </a>
-                        <a className={`navbar-item ${isActive(a.pathname, '/test')}`} href="/test">
-                            New
+                        <a className={`navbar-item ${isActive(a.pathname, ['/newest/\\d'])}`} href="/newest/1">
+                            Newest
+                        </a>
+                        <a className={`navbar-item ${isActive(a.pathname, ['/ask/\\d'])}`} href="/ask/1">
+                            Ask
+                        </a>
+                        <a className={`navbar-item ${isActive(a.pathname, ['/show/\\d'])}`} href="/show/1">
+                            Show
+                        </a>
+                        <a className={`navbar-item ${isActive(a.pathname, ['/jobs/\\d'])}`} href="/jobs/1">
+                            Jobs
                         </a>
                     </div>
                 </div>

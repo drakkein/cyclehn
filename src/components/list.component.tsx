@@ -6,18 +6,18 @@ import { VNode } from '@cycle/dom';
 
 import { listItemComponent } from './list-item.component';
 
-const maxPages = 10;
-
 export function ListComponent(sources: AppSources): AppSinks {
-    const props$ = sources.props$ || xs.of({ page: 1 });
+
+    const props$ = sources.props$ || xs.of({ page: 1, list: 'news', max: 10 });
+
     const vdom$ = view(sources.onion.state$, props$);
     const action$ = intent(sources);
 
     const http$ = props$
-        .map((query: any) => ({
-            url: 'https://hnpwa.com/api/v0/news.json',
+        .map((props: any) => ({
+            url: `https://hnpwa.com/api/v0/${props.list}.json`,
             category: 'news',
-            query: query
+            query: { page: props.page }
         }));
 
     return {
@@ -47,15 +47,16 @@ export function view(state$: Stream<AppState>, props$: Stream<any>): Stream<VNod
             const pagination = {
                 previous: Number(props.page) - 1,
                 actual: props.page,
-                next: Number(props.page) + 1
+                next: Number(props.page) + 1,
+                max: Number(props.max)
             };
             return <div className="box is-radiusless">
                 {items}
                 <nav className="pagination is-centered" role="navigation" aria-label="pagination">
-                    <a href={`/news/${pagination.previous}`}
+                    <a href={`/${props.list}/${pagination.previous}`}
                        className={`pagination-previous ${pagination.previous <= 0 ? 'pagination-disabled' : ''}`}>Previous</a>
-                    <a href={`/news/${pagination.next}`}
-                       className={`pagination-next ${pagination.next > maxPages ? 'pagination-disabled' : ''}`}>Next
+                    <a href={`/${props.list}/${pagination.next}`}
+                       className={`pagination-next ${pagination.next > pagination.max ? 'pagination-disabled' : ''}`}>Next
                         page</a>
                     <span className="pagination-indicator">Page {pagination.actual}</span>
                 </nav>

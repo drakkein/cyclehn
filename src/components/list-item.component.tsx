@@ -10,14 +10,14 @@ function view(props: FeedItem | 'skeleton'): VNode {
     const item = props as FeedItem;
     const domainString = !!item.domain ? <span className="has-text-grey-light">({item.domain})</span> : '';
     const metaString = !!item.title ? <span>
-                Posted by <a href={`/user/${item.user}`}>{item.user || 'ad'}</a>
+                Posted by <a href={`/user/${item.user}`}>{item.user || 'job'}</a>
                 | <a className="has-text-dark has-text-underlined" href={`/item/${item.id}`}>{item.comments_count} comments</a>
                 </span> : '';
 
     return <article className={`media ${props === 'skeleton' ? 'loading' : 'loaded'}`}>
         <div className="media-left">
             <span className="has-text-info points is-size-4">
-                {item.points}{!item.points && item.title ? <span className="bd-emoji">💩</span> : ''}
+                {item.points}{!item.points && item.title ? <span className="bd-emoji">📢</span> : ''}
             </span>
         </div>
         <div className="media-content">

@@ -8,8 +8,11 @@ import { ListComponent } from './list.component';
 export function RouterOutlet(sources: AppSources): AppSinks {
     const routes = {
         '/': ListComponent,
-        '/test': Test,
-        '/news/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page}),  ...srcs})
+        '/news/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 10, list: 'news'}),  ...srcs}),
+        '/newest/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 12, list: 'newest'}),  ...srcs}),
+        '/ask/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 3, list: 'ask'}),  ...srcs}),
+        '/show/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 2, list: 'show'}),  ...srcs}),
+        '/jobs/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 1, list: 'jobs'}),  ...srcs})
     };
     const match$ = sources.router.define(routes);
 
