@@ -1,0 +1,17 @@
+{
+  "short_name": "Cycle HNPWA",
+  "name": "Cycle.js implementation of HNPWA",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "type": "image/x-icon",
+      "sizes": "16x16"
+    },
+    {
+      "src": "favicon.png",
+      "type": "image/png",
+      "sizes": "200x200"
+    }
+  ],
+  "start_url": "/"
+}
