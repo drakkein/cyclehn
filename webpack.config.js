@@ -1,8 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 const appPath = (...names) => path.join(process.cwd(), ...names);
 
+const PUBLIC_PATH = 'https:/hnpwa.drakkein.me';
 //This will be merged with the config from the flavor
 module.exports = {
     entry: {
@@ -19,6 +21,16 @@ module.exports = {
             options: {
                 context: __dirname
             }
-        })
+        }),
+        new SWPrecacheWebpackPlugin(
+            {
+                cacheId: 'my-project-name',
+                dontCacheBustUrlsMatching: /\.\w{8}\./,
+                filename: 'service-worker.js',
+                minify: true,
+                navigateFallback: PUBLIC_PATH + 'index.html',
+                staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+            }
+        ),
     ]
 };
