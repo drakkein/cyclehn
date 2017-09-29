@@ -1,4 +1,4 @@
-import xs from 'xstream';
+import xs, { Stream } from 'xstream';
 
 import { Test } from './test.component';
 
@@ -8,11 +8,15 @@ import { ListComponent } from './list.component';
 export function RouterOutlet(sources: AppSources): AppSinks {
     const routes = {
         '/': ListComponent,
+        '/news': (srcs: AppSources) => redirect('news/1'),
         '/news/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 10, list: 'news'}),  ...srcs}),
-        '/newest' : (srcs: AppSources) => { console.log('trorlololol');return ListComponent({props$: xs.of({page: 1, max: 12, list: 'newest'}),  ...srcs}); },
+        '/newest': (srcs: AppSources) => redirect('newest/1'),
         '/newest/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 12, list: 'newest'}),  ...srcs}),
+        '/ask': (srcs: AppSources) => redirect('ask/1'),
         '/ask/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 3, list: 'ask'}),  ...srcs}),
+        '/show': (srcs: AppSources) => redirect('show/1'),
         '/show/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 2, list: 'show'}),  ...srcs}),
+        '/jobs': (srcs: AppSources) => redirect('jobs/1'),
         '/jobs/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 1, list: 'jobs'}),  ...srcs})
     };
     const match$ = sources.router.define(routes);
@@ -30,10 +34,18 @@ export function RouterOutlet(sources: AppSources): AppSinks {
         .debug((e: MouseEvent) => e.preventDefault())
         .map((e: MouseEvent) => (e.currentTarget as HTMLAnchorElement).pathname);
 
+    /*
+    Every sink is returned as correct stream or empty stream in case when component is not operating on this streams
+     */
     return {
-        DOM: page$.map((c: AppSinks) => c.DOM).flatten(),
-        onion: page$.map((c: AppSinks) => c.onion).flatten(),
-        HTTP: page$.map((c: AppSinks) => c.HTTP).flatten(),
-        router: navigation$
+        DOM: page$.map((c: AppSinks) => c.DOM || xs.empty()).flatten(),
+        onion: page$.map((c: AppSinks) => c.onion || xs.empty()).flatten(),
+        HTTP: page$.map((c: AppSinks) => c.HTTP || xs.empty()).flatten(),
+        // This is kind a way to handle redirection to first page in case of missing page param in routing
+        router: page$.map((c: AppSinks) => c.router ? xs.merge(navigation$, c.router) : navigation$).flatten()
     };
+}
+
+function redirect(path: string): { router: Stream<string> } {
+    return { router: xs.of(path) };
 }

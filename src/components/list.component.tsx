@@ -41,8 +41,8 @@ export function intent({ DOM, HTTP }: AppSources): Stream<Reducer> {
 export function view(state$: Stream<AppState>, props$: Stream<any>): Stream<VNode> {
     return xs.combine(state$.map(state => state.list), props$)
         .map(([list, props]) => {
-            const items = list
-                .map((item, index) => listItemComponent(item));
+            const items = list ? list
+                .map((item, index) => listItemComponent(item)) : [];
 
             const pagination = {
                 previous: Number(props.page) - 1,
