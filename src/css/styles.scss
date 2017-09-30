@@ -120,3 +120,8 @@ body {
   text-align: right;
   position: relative;
 }
+
+// brand image IE fix
+.navbar-item img {
+  height: 100%;
+}

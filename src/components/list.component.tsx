@@ -28,7 +28,8 @@ export function ListComponent(sources: AppSources): AppSinks {
 }
 
 export function intent({ DOM, HTTP }: AppSources): Stream<Reducer> {
-    const init$: Stream<Reducer> = xs.of<Reducer>(state => ({ ...state, list: Array(30).fill('skeleton') }));
+    const skeletonList = Array.apply(0, { length: 30 }).map(() => 'skeleton');
+    const init$: Stream<Reducer> = xs.of<Reducer>(state => ({ ...state, list: skeletonList }));
 
     const news$ = HTTP.select('news')
         .flatten()

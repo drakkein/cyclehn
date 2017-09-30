@@ -1,3 +1,6 @@
+// import polyfills
+import 'core-js/es7/array'; // due of considerDataAria and svg methods wchih using Array.includes in snabbdom-pragma
+
 import xs from 'xstream';
 import { setup, run } from '@cycle/run';
 import { restartable, rerunner } from 'cycle-restart';

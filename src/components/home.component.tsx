@@ -1,7 +1,5 @@
 import { Sinks, Sources } from '../interfaces';
 
-import { h } from 'snabbdom';
-
 import xs, { Stream } from 'xstream';
 import { div, DOMSource, h2, VNode } from '@cycle/dom';
 import { StateSource } from 'cycle-onionify';

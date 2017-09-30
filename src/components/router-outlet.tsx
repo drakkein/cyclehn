@@ -1,7 +1,5 @@
 import xs, { Stream } from 'xstream';
 
-import { Test } from './test.component';
-
 import { AppSinks, AppSources } from '../interfaces';
 import { ListComponent } from './list.component';
 
@@ -9,16 +7,17 @@ export function RouterOutlet(sources: AppSources): AppSinks {
     const routes = {
         '/': ListComponent,
         '/news': (srcs: AppSources) => redirect('news/1'),
-        '/news/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 10, list: 'news'}),  ...srcs}),
+        '/news/:page': (page: string) => (srcs: AppSources) => ListComponent({ props$: xs.of({ page, max: 10, list: 'news' }), ...srcs }),
         '/newest': (srcs: AppSources) => redirect('newest/1'),
-        '/newest/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 12, list: 'newest'}),  ...srcs}),
+        '/newest/:page': (page: string) => (srcs: AppSources) => ListComponent({ props$: xs.of({ page, max: 12, list: 'newest' }), ...srcs }),
         '/ask': (srcs: AppSources) => redirect('ask/1'),
-        '/ask/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 3, list: 'ask'}),  ...srcs}),
+        '/ask/:page': (page: string) => (srcs: AppSources) => ListComponent({ props$: xs.of({ page, max: 3, list: 'ask' }), ...srcs }),
         '/show': (srcs: AppSources) => redirect('show/1'),
-        '/show/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 2, list: 'show'}),  ...srcs}),
+        '/show/:page': (page: string) => (srcs: AppSources) => ListComponent({ props$: xs.of({ page, max: 2, list: 'show' }), ...srcs }),
         '/jobs': (srcs: AppSources) => redirect('jobs/1'),
-        '/jobs/:page': (page: string) => (srcs: AppSources) => ListComponent({props$: xs.of({page, max: 1, list: 'jobs'}),  ...srcs})
+        '/jobs/:page': (page: string) => (srcs: AppSources) => ListComponent({ props$: xs.of({ page, max: 1, list: 'jobs' }), ...srcs })
     };
+
     const match$ = sources.router.define(routes);
 
     const page$ = match$.map(({ path, value }: any) => {
@@ -28,11 +27,19 @@ export function RouterOutlet(sources: AppSources): AppSinks {
         });
     });
 
-// naive filtering
+    // naive filtering
     const navigation$ = sources.DOM.select('a[href^="/"]:not([disabled]')
         .events('click')
         .debug((e: MouseEvent) => e.preventDefault())
-        .map((e: MouseEvent) => (e.currentTarget as HTMLAnchorElement).pathname);
+        .map((e: MouseEvent) => {
+            // as always in IE currentTarget points to whole first parent div
+            const pathname = (e.currentTarget as HTMLAnchorElement).pathname || (e.target as HTMLAnchorElement).pathname;
+            // would be to easy if IE would work with strings instead of PushHistoryInput
+            return {
+                type: 'push',
+                pathname
+            };
+        });
 
     /*
     Every sink is returned as correct stream or empty stream in case when component is not operating on this streams
