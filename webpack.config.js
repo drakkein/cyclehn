@@ -1,9 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-const StyleExtHtmlWebpackPlugin = require('style-ext-html-webpack-plugin');
-const BrotliPlugin = require('brotli-webpack-plugin');
-
 
 const appPath = (...names) => path.join(process.cwd(), ...names);
 

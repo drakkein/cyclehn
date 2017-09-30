@@ -2,6 +2,7 @@ import xs, { Stream } from 'xstream';
 
 import { AppSinks, AppSources } from '../interfaces';
 import { ListComponent } from './list.component';
+import { ItemComponent } from './item.component';
 
 export function RouterOutlet(sources: AppSources): AppSinks {
     const routes = {
@@ -15,7 +16,8 @@ export function RouterOutlet(sources: AppSources): AppSinks {
         '/show': (srcs: AppSources) => redirect('show/1'),
         '/show/:page': (page: string) => (srcs: AppSources) => ListComponent({ props$: xs.of({ page, max: 2, list: 'show' }), ...srcs }),
         '/jobs': (srcs: AppSources) => redirect('jobs/1'),
-        '/jobs/:page': (page: string) => (srcs: AppSources) => ListComponent({ props$: xs.of({ page, max: 1, list: 'jobs' }), ...srcs })
+        '/jobs/:page': (page: string) => (srcs: AppSources) => ListComponent({ props$: xs.of({ page, max: 1, list: 'jobs' }), ...srcs }),
+        'item/:id': (id: string) => (srcs: AppSources) => ItemComponent({ props$: xs.of({ id, max: 1, list: 'jobs' }), ...srcs })
     };
 
     const match$ = sources.router.define(routes);

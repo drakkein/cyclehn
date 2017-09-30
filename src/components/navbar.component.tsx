@@ -27,7 +27,7 @@ export function view(active$: Stream<any>, state$: Stream<AppState>): Stream<VNo
         .map(([a, menuActive]) => <div className="navbar is-primary" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
                     <a className="navbar-item" href="https://cycle.js.org">
-                        <img src="/public/cyclejs_logo.svg"
+                        <img src="cyclejs_logo.svg"
                              alt="Cycle.js PWA HackerNews reader" width="112" height="28" />
                     </a>
                     <div className={`navbar-burger burger ${menuActive.hamburgerActive ? 'is-active' : ''}`}
