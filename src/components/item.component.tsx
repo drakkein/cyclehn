@@ -3,6 +3,7 @@ import xs, { Stream } from 'xstream';
 
 import { AppSinks, AppSources, AppState, Item, Reducer } from '../interfaces';
 import { CommentComponent } from './comment.component';
+import { LoaderComponent } from './loader.component';
 
 export function ItemComponent(sources: AppSources): AppSinks {
     const action$ = intent(sources);
@@ -38,9 +39,7 @@ function view(state$: Stream<AppState>): Stream<VNode> {
         .map(state => state.item)
         .map((item: Item) => {
             if (!item) {
-                return <div className="loader">
-                    <div className="spinner"></div>
-                </div>;
+                return LoaderComponent();
             }
 
             const comments = item.comments
@@ -49,7 +48,7 @@ function view(state$: Stream<AppState>): Stream<VNode> {
             const metaString = !!item.title ? <span>
                 {item.points} Points | Posted by <a href={`/user/${item.user}`}>{item.user || 'job'}</a></span> : '';
 
-            return <div className="item-container">
+            return <div className="app-container">
                 <section className="hero is-primary">
                     <div className="hero-body">
                         <div className="container">

@@ -1,10 +1,8 @@
 import { Stream } from 'xstream';
 import { VNode, DOMSource } from '@cycle/dom';
 import { HTTPSource, RequestOptions } from '@cycle/http';
-import { TimeSource } from '@cycle/time';
 import { RouterSink, RouterSource } from 'cyclic-router';
 import { StateSource } from 'cycle-onionify';
-import { string } from "jsverify";
 
 export type Sources = {
     props$?: Stream<any>;
@@ -29,6 +27,7 @@ export type AppState = {
     hamburgerActive: boolean;
     list: FeedItem[],
     item: Item | undefined,
+    user: User | undefined,
 };
 
 export interface FeedItem {
@@ -43,6 +42,13 @@ export interface FeedItem {
     type: string;
     url?: string;
     domain?: string;
+}
+
+export interface User {
+    id: string;
+    about: string;
+    created: string;
+    karma: string;
 }
 
 export interface Item {
