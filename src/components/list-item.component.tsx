@@ -13,8 +13,8 @@ function view(props: FeedItem | 'skeleton'): VNode {
                 Posted by <a href={`/user/${item.user}`}>{item.user || 'job'}</a> | <a className="has-text-dark has-text-underlined" href={`/item/${item.id}`}>{item.comments_count} comments</a>
                 </span> : '';
 
-    return <article className={`media ${props === 'skeleton' ? 'loading' : 'loaded'}`}>
-        <div className="media-left">
+    return <article className={`media ${props === 'skeleton' ? 'skeleton' : 'app-container'}`}>
+        <div data-skeletonprimary className="media-left">
             <span className="has-text-info points is-size-4">
                 {item.points}{!item.points && item.title ? <span className="bd-emoji">📢</span> : ''}
             </span>
@@ -23,10 +23,10 @@ function view(props: FeedItem | 'skeleton'): VNode {
             <div className="content">
                 <a href={item.url}>
                     <span className="is-pulled-right has-text-grey time">{item.time_ago}</span>
-                    <h5>{item.title} {domainString}</h5>
+                    <h5 data-skeleton >{item.title} {domainString}</h5>
                 </a>
             </div>
-            <div className="meta is-size-7">
+            <div data-skeleton className="meta is-size-7">
                 {metaString}
             </div>
         </div>

@@ -75,8 +75,9 @@ body {
   min-height: 55px;
 }
 
-.loading {
-  & .content h5:before, & .meta:before, & .media-left:before {
+.skeleton {
+  & [data-skeleton]:before, [data-skeletonprimary]:before {
+    background-color: $skeleton-grey;
     content: ' ';
     position: absolute;
     top: 0;
@@ -87,17 +88,9 @@ body {
     animation: skeleton 500ms;
   }
 
-  & .media-left:before {
+  & [data-skeletonprimary]:before {
     background-color: $skeleton-primary;
   }
-
-  & .content h5:before, & .meta:before {
-    background-color: $skeleton-grey;
-  }
-}
-
-.loaded {
-  animation: skeleton 400ms;
 }
 
 .content h5 {
@@ -149,8 +142,7 @@ body {
   color: $grey-lighter;
 }
 
-.loader, .item-container {
-  animation: skeleton 400ms;
+.loader, .app-container {
   animation: skeleton 400ms;
 }
 
