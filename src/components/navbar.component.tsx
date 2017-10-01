@@ -26,7 +26,7 @@ export function view(active$: Stream<any>, state$: Stream<AppState>): Stream<VNo
     return xs.combine(active$, state$)
         .map(([a, menuActive]) => <div className="navbar is-primary" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
-                    <a className="navbar-item" href="https://cycle.js.org">
+                    <a className="navbar-item" href="/">
                         <img src="cyclejs_logo.svg"
                              alt="Cycle.js PWA HackerNews reader" width="112" height="28" />
                     </a>

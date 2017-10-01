@@ -44,14 +44,14 @@ function view(state$: Stream<AppState>): Stream<VNode> {
 
             const comments = item.comments
                 .map(comment => CommentComponent(comment));
-
+            const postedBy = item.user ? <a href={`user/${item.user}`}>{item.user}</a> : <span className="has-text-grey-lighter">job</span>;
             const metaString = !!item.title ? <span>
-                {item.points} Points | Posted by <a href={`/user/${item.user}`}>{item.user || 'job'}</a></span> : '';
+                {item.points} Points | Posted by {postedBy}</span> : '';
 
             return <div className="app-container">
                 <section className="hero is-primary">
                     <div className="hero-body">
-                        <div className="container">
+                        <div className="content">
                             <h1 className="title">
                                 <a href={item.url}>{item.title} <span
                                     className="has-text-grey-lighter">({item.domain})</span></a>
