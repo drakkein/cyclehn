@@ -4,6 +4,7 @@ import xs, { Stream } from 'xstream';
 import { AppSinks, AppSources, AppState, Item, Reducer } from '../interfaces';
 import { CommentComponent } from './comment.component';
 import { LoaderComponent } from './loader.component';
+import { API_ITEM } from '../config';
 
 export function ItemComponent(sources: AppSources): AppSinks {
     const action$ = intent(sources);
@@ -12,7 +13,7 @@ export function ItemComponent(sources: AppSources): AppSinks {
 
     const http$ = props$
         .map((props: any) => ({
-            url: `https://hnpwa.com/api/v0/item/${props.id}.json`,
+            url: API_ITEM(props.id),
             category: 'item'
         }));
 

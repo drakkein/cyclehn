@@ -3,6 +3,7 @@ import { VNode } from '@cycle/dom';
 
 import { AppSources, AppSinks, AppState, Reducer, User } from '../interfaces';
 import { LoaderComponent } from './loader.component';
+import { API_USER } from '../config';
 
 export function UserComponent(sources: AppSources): AppSinks {
     const vdom$ = sources.onion.state$
@@ -13,7 +14,7 @@ export function UserComponent(sources: AppSources): AppSinks {
 
     const http$ = sources.props$!
         .map((props: { name: string }) => ({
-            url: `https://hnpwa.com/api/v0/user/${props.name}.json`,
+            url: API_USER(props.name),
             category: 'user'
         }));
 
@@ -51,7 +52,7 @@ function view(user: User): VNode {
                     </div>
                 </div>
             </section>
-            <div className="box" innerHTML={user.about}></div>
+            <div className="box  is-radiusless" innerHTML={user.about}></div>
         </div>
     );
 }

@@ -1,13 +1,11 @@
 import xs, { Stream } from 'xstream';
-import { a } from '@cycle/dom';
+import { a, VNode } from '@cycle/dom';
 
 import { AppSources, AppSinks, AppState, Reducer } from '../interfaces';
-import { VNode } from '@cycle/dom';
-
 import { listItemComponent } from './list-item.component';
+import { API_NEWS } from '../config';
 
 export function ListComponent(sources: AppSources): AppSinks {
-
     const props$ = sources.props$ || xs.of({ page: 1, list: 'news', max: 10 });
 
     const vdom$ = view(sources.onion.state$, props$);
@@ -15,7 +13,7 @@ export function ListComponent(sources: AppSources): AppSinks {
 
     const http$ = props$
         .map((props: any) => ({
-            url: `https://hnpwa.com/api/v0/${props.list}.json`,
+            url: API_NEWS(props.list),
             category: 'news',
             query: { page: props.page }
         }));
