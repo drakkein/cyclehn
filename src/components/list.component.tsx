@@ -1,5 +1,5 @@
 import xs, { Stream } from 'xstream';
-import { a, VNode } from '@cycle/dom';
+import { VNode } from '@cycle/dom';
 
 import { AppSources, AppSinks, AppState, Reducer } from '../interfaces';
 import { listItemComponent } from './list-item.component';

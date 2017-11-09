@@ -1,5 +1,5 @@
 import xs, { Stream } from 'xstream';
-import { VNode, div, h } from '@cycle/dom';
+import { VNode, div } from '@cycle/dom';
 
 import { AppSinks, AppSources, Reducer } from './interfaces';
 import { RouterOutlet } from './components/router-outlet';

@@ -1,7 +1,6 @@
 // import polyfills
 import 'core-js/es7/array'; // due of considerDataAria and svg methods wchih using Array.includes in snabbdom-pragma
 
-import xs from 'xstream';
 import { setup, run } from '@cycle/run';
 import { restartable, rerunner } from 'cycle-restart';
 import { makeDOMDriver } from '@cycle/dom';
@@ -10,7 +9,7 @@ import { timeDriver } from '@cycle/time';
 import isolate from '@cycle/isolate';
 import onionify from 'cycle-onionify';
 
-import { Component, Sources, RootSinks } from './interfaces';
+import { Component } from './interfaces';
 import { App } from './app';
 
 import { routerify } from 'cyclic-router';

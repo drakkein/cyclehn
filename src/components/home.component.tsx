@@ -1,11 +1,10 @@
-import { Sinks, Sources } from '../interfaces';
+import { Sources } from '../interfaces';
 
 import xs, { Stream } from 'xstream';
-import { div, DOMSource, h2, VNode } from '@cycle/dom';
+import { DOMSource, VNode } from '@cycle/dom';
 import { StateSource } from 'cycle-onionify';
 
 type AppSources = Sources & { onion: StateSource<AppState> };
-type AppSinks = Sinks & { onion: Stream<Reducer> };
 type Reducer = (prev: AppState) => AppState;
 type AppState = {
     count: number;

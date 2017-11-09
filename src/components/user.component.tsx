@@ -52,7 +52,8 @@ function view(user: User): VNode {
                     </div>
                 </div>
             </section>
-            <div className="box  is-radiusless" innerHTML={user.about}></div>
+            <div className="box  is-radiusless" innerHTML={user.about}>
+            </div>
         </div>
     );
 }
